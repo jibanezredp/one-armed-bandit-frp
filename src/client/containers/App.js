@@ -2,19 +2,29 @@ import React from 'react';
 import R from 'ramda';
 import Fruit from '../components/Fruit';
 
-const App = ({ fruits }) => {
+class App extends React.Component {
 
-  const fruitElems = (fruit) => <Fruit {...fruit} key={fruit.id} />;
+  state = {
+    fruits: [],
+  };
 
-  return (
-    <div className='one-armed-bandit'>
-      {R.values(R.map(fruitElems)(fruits))}
-    </div>
-  );
-};
+  componentWillMount() {
+    const { store } = this.props;
+    store.rollFruits();
+    store.suscribe((fruits) => this.setState({ fruits }));
+  }
+
+  render() {
+    return (
+      <div className='one-armed-bandit'>
+        {R.map(fruit => <Fruit {...fruit} key={fruit.id} />)(this.state.fruits)}
+      </div>
+    );
+  }
+}
 
 App.propTypes = {
-  fruits: React.PropTypes.object.isRequired,
+  store: React.PropTypes.object.isRequired,
 };
 
 export default App;

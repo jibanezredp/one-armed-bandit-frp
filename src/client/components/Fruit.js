@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Fruit = ({ color, name }) => {
-  const faName = `fa fa-${name} fa-5x ${name == 'spinner' ? 'fa-spin' : ''}`;
+const Fruit = ({ color, icon }) => {
+  const faName = `fa fa-${icon} fa-5x ${icon == 'spinner' ? 'fa-spin' : ''}`;
   const fruitStyle = {
     color,
   };
@@ -15,7 +15,7 @@ const Fruit = ({ color, name }) => {
 
 Fruit.propTypes = {
   color: React.PropTypes.string.isRequired,
-  name: React.PropTypes.string.isRequired,
+  icon: React.PropTypes.string.isRequired,
 };
 
 export default Fruit;
