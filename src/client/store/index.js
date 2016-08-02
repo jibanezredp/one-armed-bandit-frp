@@ -12,6 +12,14 @@ const combinedFruits = flyd.combine((a, b, c, d, e, self, changed) => {
   return [a(), b(), c(), d(), e()];
 }, fruits);
 
+const watchFruits = flyd.combine((a, self, changed) => {
+  let n = 0;
+  R.forEach((o) => {
+    if (o.icon === 'paper-plane') n = n + 1;
+  }, a());
+  if (n === 5) return true;
+}, [combinedFruits])
+
 const rollFruit = (fruit) => {
   const props = {
     id: fruit().id,
@@ -20,7 +28,9 @@ const rollFruit = (fruit) => {
   };
   setTimeout(() => {
     fruit(props);
-  }, 500);
+    if (fruit().icon !== 'paper-plane')
+      rollFruit(fruit);
+  }, 200);
 };
 
 const rollFruits = () => R.forEach(rollFruit, fruits);
@@ -29,4 +39,8 @@ const suscribe = (fn) => {
   flyd.on(fn, combinedFruits);
 };
 
-export default { suscribe, rollFruits };
+const onEnd = (fn) => {
+  flyd.on(fn, watchFruits);
+};
+
+export default { suscribe, rollFruits, onEnd };

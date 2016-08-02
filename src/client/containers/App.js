@@ -12,6 +12,15 @@ class App extends React.Component {
     const { store } = this.props;
     store.rollFruits();
     store.suscribe((fruits) => this.setState({ fruits }));
+    store.onEnd(() => this.setState({
+      fruits: [
+        { id: 0, icon: 'paper-plane', color: '#F34235' },
+        { id: 1, icon: 'paper-plane', color: '#F34235' },
+        { id: 2, icon: 'paper-plane', color: '#F34235' },
+        { id: 3, icon: 'paper-plane', color: '#F34235' },
+        { id: 4, icon: 'paper-plane', color: '#F34235' },
+      ],
+    }));
   }
 
   render() {
