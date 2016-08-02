@@ -8,11 +8,12 @@ const fruitFactory = (n) => R.times((id) =>
 
 const fruits = fruitFactory(5);
 
-const combinedFruits = flyd.combine((a, b, c, d, e, self, changed) => {
-  return [a(), b(), c(), d(), e()];
-}, fruits);
+const combinedFruits = flyd.combine(
+  (a, b, c, d, e) => [a(), b(), c(), d(), e()],
+  fruits
+);
 
-const watchFruits = flyd.combine((a, self, changed) => {
+const watchFruits = flyd.combine(a => {
   let n = 0;
   R.forEach((o) => {
     if (o.icon === 'paper-plane') n = n + 1;
